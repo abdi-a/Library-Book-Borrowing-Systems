@@ -1,22 +1,20 @@
-const express = require("express");
-const dotenv = require("dotenv");
+// src/app.js
+const express = require('express');
+const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const booksRoutes = require('./routes/booksRoutes');
 
 dotenv.config();
 
 const app = express();
+
+// Middleware
 app.use(express.json());
 
-// connect DB
+// Routes
+app.use('/api/books', booksRoutes);
+
+// Connect to DB
 connectDB();
 
-// your routes...
-
-// basic route
-app.get("/", (req, res) => {
-  res.send("Library API is running 📚");
-});
-
-// start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = app;
